@@ -46,6 +46,7 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                        @if(Auth::guard('admin')->check())
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -53,18 +54,61 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{ route('logout') }}"
+                                        <a href="{{ route('admin.logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            Logout Admmin
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                                            <input type="hidden" name="_method" value="POST">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
                                 </ul>
                             </li>
+                            @elseif (Auth::user()->role=='user1')
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('home.logout') }}"
+                                           onclick="event.preventDefault();
+                                             document.getElementById('user1-logout-form').submit();">
+                                            Logout User1
+                                        </a>
+
+                                        <form id="user1-logout-form" action="{{ route('home.logout') }}" method="POST" style="display: none;">
+                                            <input type="hidden" name="_method" value="POST">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            @else 
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('user2.logout') }}"
+                                           onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                            Logout User2
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('user2.logout') }}" method="POST" style="display: none;">
+                                            <input type="hidden" name="_method" value="POST">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            @endif
                         @endguest
                     </ul>
                 </div>

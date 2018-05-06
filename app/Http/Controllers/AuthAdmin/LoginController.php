@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:admin',['except'=>'Adminlogout']);
     }
 
    
@@ -20,12 +20,7 @@ class LoginController extends Controller
         return view('authAdmin.login');
     }
 
-    /**
-     * Handle a login request to the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
-     */
+  
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -46,9 +41,10 @@ class LoginController extends Controller
         return redirect()->back()->withInput($request->only('email', 'remember'));
     }
 
-    public function logout()
+    public function Adminlogout()
     {
         Auth::guard('admin')->logout();
         return redirect('/');
+        
     }
 }

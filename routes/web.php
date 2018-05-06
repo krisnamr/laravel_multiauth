@@ -9,21 +9,36 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/user/logout','Auth\LoginController@logoutUser')->name('user.logout');
 
+//Route Admin
 Route::prefix('admin')->group(function() {
     Route::get('/', 'AdminController@index')->name('admin.home');
     Route::get('/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
-    Route::get('/logout','AuthAdmin\LoginController@logout')->name('admin.logout');
+    Route::get('/logout', 'AuthAdmin\LoginController@Adminlogout')->name('admin.logout');
+    Route::post('/logout', 'AuthAdmin\LoginController@Adminlogout')->name('admin.logout');
 });
 
-Route::get('/user2',function(){
-    return view('user.user2');
-})->middleware(['role2','auth']);
+//Route User1
+Route::prefix('home')->group(function() {
+    Route::get('/', function(){
+    return view('user.user1');
+    })->middleware(['role1','auth']);
+    Route::get('/logout', 'Auth\LoginController@userLogout')->name('home.logout');
+    Route::post('/logout', 'Auth\LoginController@userLogout')->name('home.logout');
+    });
 
-Route::get('/home', function(){
-return view('user.user1');
-})->middleware(['role1','auth']);
+//Route User2
+Route::prefix('user2')->group(function(){
+    Route::get('/',function(){
+        return view('user.user2');
+    })->middleware(['role2','auth']);
+    
+Route::get('/logout', 'Auth\LoginController@userLogout')->name('user2.logout');
+Route::post('/logout', 'Auth\LoginController@userLogout')->name('user2.logout');
+
+});
+
+
 
 Route::get('/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
