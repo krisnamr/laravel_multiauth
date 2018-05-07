@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+                <div class="panel-heading">Reset Password Admin</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -15,6 +15,7 @@
                     @endif
 
                     <form class="form-horizontal" method="POST" action="{{ route('admin.password.email') }}">
+                        <input type="hidden" name="_method" value="POST">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
